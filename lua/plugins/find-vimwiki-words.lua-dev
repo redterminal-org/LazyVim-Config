@@ -1,0 +1,18 @@
+return {
+  "find-vimwiki-words.nvim",
+  lazy = false,
+  name = "find-vimwiki-words",
+  dependencies = { { "vimwiki/vimwiki" }, { "nvim-telescope/telescope.nvim" } },
+  keys = {
+    {
+      "<leader>tw",
+      function()
+        require("find-vimwiki-words").find_vimwiki_words()
+      end,
+      desc = "Telescope Find VimWiki words",
+    },
+  },
+
+  dev = { true },
+  dir = "~/Work/Programming/Codeberg.org/find-vimwiki-words.nvim/",
+}

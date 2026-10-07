@@ -1,0 +1,251 @@
+return {
+	"nvim-neorg/neorg",
+	event = { "LazyFile" },
+	ft = { "norg" },
+	opts = {
+		load = {
+			-- Basics
+			["core.defaults"] = {}, -- Loads default modules
+			["core.concealer"] = {}, -- Handles visual rendering of markup
+			["core.dirman"] = { -- Manages workspaces
+				config = {
+					workspaces = {
+						notes = "~/Work/Notes",
+					},
+					default_workspace = "notes",
+          index = "index.norg",
+				},
+			},
+      ["core.esupports.metagen"] = {
+              config = {
+                type = "auto",
+                undojoin_updates = false,
+                update_date = true,
+                timezone = "implicit-local",
+              },
+      },
+			["core.autocommands"] = {},
+			["core.integrations.treesitter"] = {},
+			["core.itero"] = {},
+			["core.highlights"] = {},
+			["core.keybinds"] = {},
+			["core.promo"] = {},
+      ["core.summary"] = {},
+			["core.qol.todo_items"] = {
+			        config = {
+			          signs = {
+			            todo = "T",
+			            undone = "U",
+			            done = "D",
+			            canceled = "C",
+			          },
+                create_todo_items = true,
+                task_states = {
+                  "TODO",
+                  "UNDONE",
+                  "DONE",
+                  "CANCELED",
+                },
+                create_todo_parents = true,
+                update_todo_parents = true,
+			        },
+			      },
+      ["core.todo-introspector"] = {},
+			["core.syntax"] = {},
+      ["core.journal"] = {
+        config = {
+          workspace = "notes",
+          journal_folder = "journal",
+          strategy = "nested",
+          use_template = false,
+        },
+      },
+      ["core.ui.calendar"] = {
+        config = {
+          calendar = "gregorian",
+        },
+      },
+       ["core.looking-glass"] = { -- Focus on a code block
+        config = {
+          width = 0.9,
+          height = 0.9,
+          border = "rounded",
+        },
+      },
+		},
+	},
+	cmd = "Neorg",
+	keys = {
+    -- NOTES
+		{
+			"<leader>nn",
+      function()
+			  vim.cmd("Neorg workspace notes")
+			end,
+			desc = "Open Note",
+			silent = true,
+		},
+		{
+			"<leader>nN",
+			"<Plug>(neorg.dirman.new-note)",
+			desc = "New Note",
+			silent = true,
+		},
+		{
+			"<tab>",
+			"<Plug>(neorg.itero.next-iteration)",
+			mode = "i",
+			ft = "norg",
+			silent = true,
+		},
+		{
+			"<C-Space>",
+			"<Plug>(neorg.qol.todo-items.todo.task-cycle)",
+			ft = "norg",
+			silent = true,
+		},
+		{
+			"<leader>nt",
+			"<cmd>Neorg toc<cr>",
+			ft = "norg",
+			desc = "Create a Table of Contents",
+			silent = true,
+		},
+		{
+			"<leader>nc",
+			"<Plug>(neorg.looking-glass.magnify-code-block)",
+			ft = "norg",
+			desc = "Magnify code block to separate buffer",
+			silent = true,
+		},
+		{
+			"<leader>ni",
+      function()
+			  vim.cmd("Neorg index")
+			end,
+			ft = "norg",
+			desc = "GoTo workspace index",
+			silent = true,
+		},
+		{
+			"<leader>nm",
+      function()
+					vim.cmd("Neorg inject-metadata")
+			end,
+			ft = "norg",
+			desc = "inject metadata into current file",
+			silent = true,
+		},
+		{
+			"<leader>nr",
+      function()
+			  vim.cmd("Neorg return")
+			end,
+			ft = "norg",
+			desc = "Return to previous Norg file",
+			silent = true,
+		},
+		{
+			"<leader>ns",
+      function()
+					vim.cmd("Neorg generate-workspace-summary")
+			end,
+			ft = "norg",
+			desc = "generate workspace summary",
+			silent = true,
+		},
+		{
+			"<leader>n>",
+			"<Plug>(neorg.promo.promote.nested)",
+			ft = "norg",
+			desc = "[neorg] Promote object (Recursively)",
+			silent = true,
+		},
+		{
+			"<leader>n<",
+			"<Plug>(neorg.promo.demote.nested)",
+			ft = "norg",
+			desc = "[neorg] Demote object (Recursively)",
+			silent = true,
+		},
+		{
+			"<leader>>>",
+			"<Plug>(neorg.promo.promote)",
+			ft = "norg",
+			desc = "[neorg] Promote object (Non-Recursively)",
+			silent = true,
+		},
+		{
+			"<leader><<",
+			"<Plug>(neorg.promo.demote)",
+			ft = "norg",
+			desc = "[neorg] Demote object (Non-Recursively)",
+			silent = true,
+		},
+		{
+			"r>",
+			"<Plug>(neorg.promo.promote.range)",
+			ft = "norg",
+			mode = "v",
+			desc = "[neorg] Promote object in range",
+			silent = true,
+		},
+		{
+			"r<",
+			"<Plug>(neorg.promo.demote.range)",
+			ft = "norg",
+			mode = "v",
+			desc = "[neorg] Demote object in range",
+			silent = true,
+		},
+    -- JOUNRNAL
+    {
+      "<leader>jn",
+      function()
+      vim.cmd("Neorg journal today")
+      end,
+      desc = "Open Today's Journal",
+      silent = true,
+    },
+    {
+      "<leader>jy",
+      function()
+      vim.cmd("Neorg journal yesterday")
+      end,
+      desc = "Open Yesterday's Journal",
+      silent = true,
+    },
+    {
+      "<leader>jt",
+      function()
+      vim.cmd("Neorg journal tomorrow")
+      end,
+      desc = "Open Tomorrow's Journal",
+      silent = true,
+    },
+    {
+      "<leader>jc",
+      function()
+      vim.cmd("Neorg journal custom")
+      end,
+      desc = "Open customs date Journal",
+      silent = true,
+    },
+    {
+      "<leader>jo",
+      function()
+      vim.cmd("Neorg journal toc open")
+      end,
+      desc = "Open journals toc",
+      silent = true,
+    },
+    {
+      "<leader>ju",
+      function()
+      vim.cmd("Neorg journal toc update")
+      end,
+      desc = "Update journals toc",
+      silent = true,
+    },
+	},
+}
